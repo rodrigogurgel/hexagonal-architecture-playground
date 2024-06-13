@@ -4,7 +4,7 @@ import org.apache.avro.compiler.specific.SpecificCompiler
 import org.apache.avro.generic.GenericData
 
 plugins {
-    id("org.springframework.boot") version "3.3.0"
+    id("org.springframework.boot") version "3.2.6"
     id("io.spring.dependency-management") version "1.1.5"
     id("io.gitlab.arturbosch.detekt") version "1.23.6"
     id("org.jlleitschuh.gradle.ktlint") version "10.3.0"
@@ -116,11 +116,7 @@ buildscript {
     val avroVersion = properties["avroVersion"]
 
     dependencies {
-        classpath("org.apache.avro:avro-tools:$avroVersion") {
-            // FIX https://devhub.checkmarx.com/cve-details/CVE-2024-26308/
-            exclude("org.apache.commons", "commons-compress")
-            classpath("org.apache.commons", "commons-compress")
-        }
+        classpath("org.apache.avro:avro-tools:$avroVersion")
     }
 }
 
