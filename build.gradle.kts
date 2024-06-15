@@ -1,11 +1,11 @@
 import io.gitlab.arturbosch.detekt.Detekt
-import org.apache.avro.Schema.Parser
+import org.apache.avro.Schema
 import org.apache.avro.compiler.specific.SpecificCompiler
 import org.apache.avro.generic.GenericData
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("org.springframework.boot") version "3.2.6"
+    id("org.springframework.boot") version "3.3.0"
     id("io.spring.dependency-management") version "1.1.5"
     id("io.gitlab.arturbosch.detekt") version "1.23.6"
     id("org.jlleitschuh.gradle.ktlint") version "10.3.0"
@@ -68,6 +68,7 @@ dependencies {
     val awsSdkVersion = properties["awsSdkVersion"]
     val detektVersion = properties["detektVersion"]
     val commonsCompressVersion = properties["commonsCompressVersion"]
+    val archUnitVersion = properties["archUnitVersion"]
 
     // Kotlin
     implementation("org.jetbrains.kotlin:kotlin-reflect")
@@ -109,16 +110,22 @@ dependencies {
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
-    testImplementation("com.tngtech.archunit:archunit:1.3.0")
-    testImplementation("com.tngtech.archunit:archunit-junit5:1.3.0")
+    testImplementation("com.tngtech.archunit:archunit:$archUnitVersion")
+    testImplementation("com.tngtech.archunit:archunit-junit5:$archUnitVersion")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
 buildscript {
     val avroVersion = properties["avroVersion"]
+    val commonsCompressVersion = properties["commonsCompressVersion"]
 
     dependencies {
-        classpath("org.apache.avro:avro-tools:$avroVersion")
+        classpath("org.apache.avro:avro-tools:$avroVersion") {
+            // FIX Task BootJar
+            // FIX https://devhub.checkmarx.com/cve-details/CVE-2024-26308/
+            exclude("org.apache.commons", "commons-compress")
+            classpath("org.apache.commons:commons-compress:$commonsCompressVersion")
+        }
     }
 }
 
@@ -137,7 +144,7 @@ val avroGen by tasks.register("generateAvroJavaClasses") {
 
     doLast {
         sourceAvroFiles.forEach { avroFile ->
-            val schema = Parser().parse(avroFile)
+            val schema = Schema.Parser().parse(avroFile)
             val compiler = SpecificCompiler(schema)
             compiler.setFieldVisibility(SpecificCompiler.FieldVisibility.PRIVATE)
             compiler.setOutputCharacterEncoding("UTF-8")
