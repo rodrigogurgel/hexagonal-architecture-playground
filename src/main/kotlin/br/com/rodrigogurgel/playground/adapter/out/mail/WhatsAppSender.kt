@@ -1,7 +1,7 @@
 package br.com.rodrigogurgel.playground.adapter.out.mail
 
+import br.com.rodrigogurgel.playground.adapter.out.mail.extension.intermittent
 import br.com.rodrigogurgel.playground.application.port.out.mail.MailSenderOutputPort
-import br.com.rodrigogurgel.playground.application.utils.intermittent
 import br.com.rodrigogurgel.playground.domain.Mail
 import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.coroutines.runSuspendCatching

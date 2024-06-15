@@ -1,4 +1,4 @@
-package br.com.rodrigogurgel.playground.adapter.common
+package br.com.rodrigogurgel.playground.adapter.`in`.extension
 
 import java.util.UUID
 

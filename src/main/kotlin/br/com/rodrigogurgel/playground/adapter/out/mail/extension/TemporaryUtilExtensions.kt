@@ -1,4 +1,4 @@
-package br.com.rodrigogurgel.playground.application.utils
+package br.com.rodrigogurgel.playground.adapter.out.mail.extension
 
 import kotlinx.coroutines.delay
 

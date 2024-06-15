@@ -1,9 +1,9 @@
 package br.com.rodrigogurgel.playground.adapter.out.event.mapper
 
-import br.com.rodrigogurgel.playground.application.exception.common.MapperException
 import br.com.rodrigogurgel.playground.domain.Mail
 import br.com.rodrigogurgel.playground.domain.MailType
 import br.com.rodrigogurgel.playground.domain.Transaction
+import br.com.rodrigogurgel.playground.exception.MapperException
 import br.com.rodrigogurgel.playground.`in`.event.dto.MailCommand
 import br.com.rodrigogurgel.playground.`in`.event.dto.MailDataCommand
 import br.com.rodrigogurgel.playground.`in`.event.dto.MailTypeCommand

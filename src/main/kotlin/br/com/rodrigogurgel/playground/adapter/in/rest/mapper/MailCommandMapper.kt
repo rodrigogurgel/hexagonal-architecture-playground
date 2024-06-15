@@ -5,10 +5,10 @@ import br.com.rodrigogurgel.playground.adapter.`in`.rest.dto.command.EmailComman
 import br.com.rodrigogurgel.playground.adapter.`in`.rest.dto.command.MailTypeCommand
 import br.com.rodrigogurgel.playground.adapter.`in`.rest.dto.command.SmsCommand
 import br.com.rodrigogurgel.playground.adapter.`in`.rest.dto.command.WhatsAppCommand
-import br.com.rodrigogurgel.playground.application.exception.common.MapperException
 import br.com.rodrigogurgel.playground.domain.Mail
 import br.com.rodrigogurgel.playground.domain.MailType
 import br.com.rodrigogurgel.playground.domain.Transaction
+import br.com.rodrigogurgel.playground.exception.MapperException
 import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.mapError
 import com.github.michaelbull.result.runCatching

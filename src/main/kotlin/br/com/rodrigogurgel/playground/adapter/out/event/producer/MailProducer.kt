@@ -2,11 +2,11 @@ package br.com.rodrigogurgel.playground.adapter.out.event.producer
 
 import br.com.rodrigogurgel.playground.adapter.out.event.mapper.toMailCommand
 import br.com.rodrigogurgel.playground.adapter.out.event.mapper.toMailProcessed
-import br.com.rodrigogurgel.playground.application.exception.common.MapperException
-import br.com.rodrigogurgel.playground.application.exception.event.ProduceException
 import br.com.rodrigogurgel.playground.application.port.out.producer.ProducerOutputPort
 import br.com.rodrigogurgel.playground.domain.Mail
 import br.com.rodrigogurgel.playground.domain.Transaction
+import br.com.rodrigogurgel.playground.exception.MapperException
+import br.com.rodrigogurgel.playground.exception.ProduceException
 import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.andThen
 import com.github.michaelbull.result.coroutines.runSuspendCatching
