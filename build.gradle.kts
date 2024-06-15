@@ -65,7 +65,6 @@ dependencies {
     val michaelBullKotlinResultVersion = properties["michaelBullKotlinResultVersion"]
     val rxJavaVersion = properties["rxJavaVersion"]
     val awsSdkVersion = properties["awsSdkVersion"]
-    val aspectjVersion = properties["aspectjVersion"]
     val detektVersion = properties["detektVersion"]
     val commonsCompressVersion = properties["commonsCompressVersion"]
 
@@ -81,6 +80,7 @@ dependencies {
     // Spring
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework:spring-aspects")
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 
     // Kafka
@@ -98,7 +98,6 @@ dependencies {
 
     // Micrometer
     implementation("io.micrometer:micrometer-registry-prometheus")
-    implementation("org.aspectj:aspectjweaver:$aspectjVersion")
 
     // Misc
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")

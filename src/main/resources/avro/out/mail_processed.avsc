@@ -1,0 +1,107 @@
+{
+  "type": "record",
+  "name": "MailProcessed",
+  "namespace": "br.com.rodrigogurgel.playground.out.event.dto",
+  "fields": [
+    {
+      "name": "transaction",
+      "type": {
+        "type": "record",
+        "name": "TransactionProcessed",
+        "fields": [
+          {
+            "name": "transactionId",
+            "type": "string"
+          },
+          {
+            "name": "correlationId",
+            "type": "string"
+          },
+          {
+            "name": "createdBy",
+            "type": "string"
+          },
+          {
+            "name": "createdFrom",
+            "type": "string"
+          },
+          {
+            "name": "createdAt",
+            "type": "long"
+          },
+          {
+            "name": "status",
+            "type": {
+              "name": "TransactionStatusProcessed",
+              "type": "enum",
+              "symbols": [
+                "SUCCESS",
+                "FAILURE"
+              ]
+            }
+          },
+          {
+            "name": "message",
+            "type": [
+              "null",
+              "string"
+            ],
+            "default": null
+          },
+          {
+            "name": "updatedAt",
+            "type": "long"
+          }
+        ]
+      }
+    },
+    {
+      "name": "data",
+      "type": {
+        "name": "MailDataProcessed",
+        "type": "record",
+        "fields": [
+          {
+            "name": "body",
+            "type": "string"
+          },
+          {
+            "name": "from",
+            "type": "string"
+          },
+          {
+            "name": "subject",
+            "type": [
+              "null",
+              "string"
+            ],
+            "default": null
+          },
+          {
+            "name": "to",
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "type": {
+              "name": "MailTypeProcessed",
+              "type": "enum",
+              "symbols": [
+                "EMAIL",
+                "SMS",
+                "WHATSAPP"
+              ]
+            }
+          },
+          {
+            "name": "sentAt",
+            "type": [
+              "null",
+              "long"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

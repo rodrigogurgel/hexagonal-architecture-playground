@@ -11,6 +11,7 @@ spring:
                 specific.avro.reader: true
                 spring.deserializer.key.delegate.class: org.apache.kafka.common.serialization.StringDeserializer
                 spring.deserializer.value.delegate.class: io.confluent.kafka.serializers.KafkaAvroDeserializer
+            max-poll-records: 500
         producer:
             bootstrap-servers: localhost:9092
             properties:
@@ -19,6 +20,8 @@ spring:
             key-serializer: org.apache.kafka.common.serialization.StringSerializer
             value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
             client-id: playground
+        listener:
+            type: batch
 
 server:
     port: 8080
@@ -33,3 +36,6 @@ management:
         metrics:
             export:
                 enabled: true
+strategy:
+    email:
+        enabled: true

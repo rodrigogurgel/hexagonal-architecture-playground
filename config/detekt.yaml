@@ -380,6 +380,11 @@ naming:
         privateVariablePattern: '(_)?[a-z][A-Za-z0-9]*'
         excludeClassPattern: '$^'
 
+formatting:
+  PackageName:
+    active: true
+    excludes: ['**/in/**', '**/out/**']
+
 performance:
     active: true
     ArrayPrimitive:

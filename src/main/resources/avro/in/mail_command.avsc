@@ -1,0 +1,73 @@
+{
+  "type": "record",
+  "name": "MailCommand",
+  "namespace": "br.com.rodrigogurgel.playground.in.event.dto",
+  "fields": [
+    {
+      "name": "transaction",
+      "type": {
+        "type": "record",
+        "name": "TransactionCommand",
+        "fields": [
+          {
+            "name": "transactionId",
+            "type": "string"
+          },
+          {
+            "name": "correlationId",
+            "type": "string"
+          },
+          {
+            "name": "createdBy",
+            "type": "string"
+          },
+          {
+            "name": "createdFrom",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "name": "data",
+      "type": {
+        "name": "MailDataCommand",
+        "type": "record",
+        "fields": [
+          {
+            "name": "body",
+            "type": "string"
+          },
+          {
+            "name": "from",
+            "type": "string"
+          },
+          {
+            "name": "subject",
+            "type": [
+              "null",
+              "string"
+            ],
+            "default": null
+          },
+          {
+            "name": "to",
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "type": {
+              "name": "MailTypeCommand",
+              "type": "enum",
+              "symbols": [
+                "EMAIL",
+                "SMS",
+                "WHATSAPP"
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

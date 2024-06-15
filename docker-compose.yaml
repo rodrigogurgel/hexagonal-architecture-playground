@@ -28,7 +28,6 @@ services:
             KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
             KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
             KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
-            KAFKA_CONFLUENT_LICENSE_TOPIC_REPLICATION_FACTOR: 1
         links:
             - zookeeper
 
@@ -53,9 +52,11 @@ services:
             - kafka
 
     akhq:
-        image: tchiotludo/akhq:latest
-        restart: unless-stopped
+        image: tchiotludo/akhq:0.24.0
         container_name: akhq
+        profiles:
+            -   kafka-ui
+        restart: unless-stopped
         environment:
             AKHQ_CONFIGURATION: |
                 akhq:
@@ -84,32 +85,38 @@ services:
         command: "-jar DynamoDBLocal.jar -inMemory -sharedDb"
         image: "amazon/dynamodb-local:latest"
         container_name: dynamodb-local
+        profiles:
+            - dynamodb
         ports:
             - "8000:8000"
         volumes:
             - "./docker/dynamodb:/home/dynamodblocal/data"
         working_dir: /home/dynamodblocal
 
-#    prometheus:
-#        container_name: prometheus
-#        image: prom/prometheus:latest
-#        restart: always
-#        extra_hosts:
-#            - "host.docker.internal:host-gateway"
-#        command:
-#            - --config.file=/etc/prometheus/prometheus.yaml
-#        volumes:
-#            - "./docker/prometheus/prometheus.yaml:/etc/prometheus/prometheus.yaml"
-#        ports:
-#            - "9090:9090"
-#
-#    grafana:
-#        container_name: grafana
-#        image: grafana/grafana:latest
-#        volumes:
-#            - "./docker/grafana/grafana-datasources.yaml:/etc/grafana/provisioning/datasources/datasources.yaml"
-#        ports:
-#            - "3000:3000"
+    prometheus:
+        container_name: prometheus
+        image: prom/prometheus:latest
+        profiles:
+            - monitoring
+        restart: always
+        extra_hosts:
+            - "host.docker.internal:host-gateway"
+        command:
+            - --config.file=/etc/prometheus/prometheus.yaml
+        volumes:
+            - "./docker/prometheus/prometheus.yaml:/etc/prometheus/prometheus.yaml"
+        ports:
+            - "9090:9090"
+
+    grafana:
+        container_name: grafana
+        image: grafana/grafana:latest
+        profiles:
+            - monitoring
+        volumes:
+            - "./docker/grafana/grafana-datasources.yaml:/etc/grafana/provisioning/datasources/datasources.yaml"
+        ports:
+            - "3000:3000"
 
 networks:
     kafka_network:
