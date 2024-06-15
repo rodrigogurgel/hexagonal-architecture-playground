@@ -2,6 +2,7 @@ import io.gitlab.arturbosch.detekt.Detekt
 import org.apache.avro.Schema.Parser
 import org.apache.avro.compiler.specific.SpecificCompiler
 import org.apache.avro.generic.GenericData
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     id("org.springframework.boot") version "3.2.6"
@@ -150,6 +151,10 @@ sourceSets {
             srcDir("${layout.buildDirectory.get()}/generated/main/java")
         }
     }
+}
+
+tasks.withType<KotlinCompile> {
+    dependsOn(avroGen)
 }
 
 tasks.withType<Test> {
