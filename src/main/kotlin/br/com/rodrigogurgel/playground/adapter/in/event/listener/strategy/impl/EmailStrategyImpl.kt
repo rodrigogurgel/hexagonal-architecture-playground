@@ -2,7 +2,7 @@ package br.com.rodrigogurgel.playground.adapter.`in`.event.listener.strategy.imp
 
 import br.com.rodrigogurgel.playground.adapter.`in`.event.listener.strategy.GenericRecordStrategy
 import br.com.rodrigogurgel.playground.adapter.mapper.event.toDomain
-import br.com.rodrigogurgel.playground.domain.usecase.MailUseCase
+import br.com.rodrigogurgel.playground.domain.usecase.SendMailUseCase
 import br.com.rodrigogurgel.playground.`in`.event.dto.MailCommand
 import br.com.rodrigogurgel.playground.`in`.event.dto.MailTypeCommand
 import com.github.michaelbull.result.Result
@@ -11,7 +11,7 @@ import org.apache.avro.generic.GenericRecord
 import org.springframework.beans.factory.annotation.Qualifier
 
 class EmailStrategyImpl(
-    @Qualifier("emailService") private val mailInputPort: MailUseCase,
+    @Qualifier("emailService") private val mailInputPort: SendMailUseCase,
 ) : GenericRecordStrategy<MailCommand> {
     override suspend fun process(value: MailCommand): Result<Unit, Throwable> = value.toDomain()
         .andThen { mail -> mailInputPort.send(mail) }

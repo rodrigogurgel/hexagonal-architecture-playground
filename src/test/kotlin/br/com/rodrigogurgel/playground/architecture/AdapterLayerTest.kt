@@ -60,7 +60,6 @@ class AdapterLayerTest {
             .resideInAnyPackage(
                 "..adapter.mapper..",
                 "..domain..",
-                "..exception..",
                 *COMMONS_PACKAGES
             )
             .check(importedClasses)
@@ -77,7 +76,6 @@ class AdapterLayerTest {
                 "..adapter.mapper..",
                 "..application.port.out..",
                 "..domain..",
-                "..exception..",
                 *COMMONS_PACKAGES
             )
             .check(importedClasses)

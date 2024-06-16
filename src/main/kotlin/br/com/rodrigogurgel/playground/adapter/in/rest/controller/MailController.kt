@@ -2,7 +2,8 @@ package br.com.rodrigogurgel.playground.adapter.`in`.rest.controller
 
 import br.com.rodrigogurgel.playground.adapter.`in`.rest.dto.command.MailCommand
 import br.com.rodrigogurgel.playground.adapter.mapper.rest.toDomain
-import br.com.rodrigogurgel.playground.domain.usecase.MailUseCase
+import br.com.rodrigogurgel.playground.domain.usecase.FindMailUseCase
+import br.com.rodrigogurgel.playground.domain.usecase.SendMailUseCase
 import com.github.michaelbull.result.andThen
 import com.github.michaelbull.result.map
 import org.springframework.beans.factory.annotation.Qualifier
@@ -17,10 +18,11 @@ import java.util.UUID
 @RestController
 @RequestMapping("/api/v1/mail")
 class MailController(
-    @Qualifier("emailInputPort") private val emailInputPort: MailUseCase,
-    @Qualifier("smsInputPort") private val smsInputPort: MailUseCase,
-    @Qualifier("whatsAppInputPort") private val whatsAppInputPort: MailUseCase,
-    @Qualifier("asyncInputPort") private val asyncInputPort: MailUseCase,
+    @Qualifier("emailInputPort") private val emailInputPort: SendMailUseCase,
+    @Qualifier("smsInputPort") private val smsInputPort: SendMailUseCase,
+    @Qualifier("whatsAppInputPort") private val whatsAppInputPort: SendMailUseCase,
+    @Qualifier("asyncInputPort") private val asyncInputPort: SendMailUseCase,
+    private val findMailUseCase: FindMailUseCase,
 ) {
     @PostMapping("/email")
     suspend fun sendEmail(
@@ -53,6 +55,6 @@ class MailController(
 
     @GetMapping("/{mailId}")
     suspend fun findMailById(@PathVariable mailId: UUID): Any? {
-        return emailInputPort.findMailById(mailId)
+        return findMailUseCase.findMailById(mailId)
     }
 }

@@ -14,7 +14,7 @@ import com.tngtech.archunit.library.Architectures.layeredArchitecture
     packages = ["br.com.rodrigogurgel.playground"],
     importOptions = [DoNotIncludeTests::class, DoNotIncludeJars::class],
 )
-class ArchitectureLayerTest {
+class ArchitectureLayersTest {
     @ArchTest
     fun `Hexagonal architecture layers definition as packages`(importedClasses: JavaClasses) {
         layeredArchitecture()

@@ -1,4 +1,4 @@
-package br.com.rodrigogurgel.playground.domain.entities
+package br.com.rodrigogurgel.playground.domain.entity
 
 import java.time.Instant
 import java.util.UUID

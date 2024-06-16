@@ -1,4 +1,4 @@
-package br.com.rodrigogurgel.playground.exception
+package br.com.rodrigogurgel.playground.adapter.exception
 
 data class MapperException(
     override val message: String?,

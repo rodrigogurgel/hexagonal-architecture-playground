@@ -1,8 +1,8 @@
-package br.com.rodrigogurgel.playground.application.port.out
+package br.com.rodrigogurgel.playground.domain.usecase
 
 import br.com.rodrigogurgel.playground.domain.entity.Mail
 import com.github.michaelbull.result.Result
 
-interface MailSenderOutputPort {
+interface SendMailUseCase {
     suspend fun send(mail: Mail): Result<Unit, Throwable>
 }

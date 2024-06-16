@@ -1,9 +1,9 @@
 package br.com.rodrigogurgel.playground.adapter.`in`.event.listener.strategy.extension
 
+import br.com.rodrigogurgel.playground.adapter.exception.DefaultStrategyNotFoundException
+import br.com.rodrigogurgel.playground.adapter.exception.MultipleStrategyMatchException
+import br.com.rodrigogurgel.playground.adapter.exception.StrategyNotFoundException
 import br.com.rodrigogurgel.playground.adapter.`in`.event.listener.strategy.GenericRecordStrategy
-import br.com.rodrigogurgel.playground.exception.DefaultStrategyNotFoundException
-import br.com.rodrigogurgel.playground.exception.MultipleStrategyMatchException
-import br.com.rodrigogurgel.playground.exception.StrategyNotFoundException
 import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.runCatching
 import org.apache.avro.generic.GenericRecord

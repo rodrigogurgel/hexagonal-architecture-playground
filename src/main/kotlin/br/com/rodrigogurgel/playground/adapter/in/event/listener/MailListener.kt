@@ -1,11 +1,11 @@
 package br.com.rodrigogurgel.playground.adapter.`in`.event.listener
 
+import br.com.rodrigogurgel.playground.adapter.exception.DefaultStrategyNotFoundException
+import br.com.rodrigogurgel.playground.adapter.exception.MultipleStrategyMatchException
+import br.com.rodrigogurgel.playground.adapter.exception.StrategyNotFoundException
 import br.com.rodrigogurgel.playground.adapter.`in`.event.listener.strategy.GenericRecordStrategy
 import br.com.rodrigogurgel.playground.adapter.`in`.event.listener.strategy.extension.default
 import br.com.rodrigogurgel.playground.adapter.`in`.event.listener.strategy.extension.findStrategy
-import br.com.rodrigogurgel.playground.exception.DefaultStrategyNotFoundException
-import br.com.rodrigogurgel.playground.exception.MultipleStrategyMatchException
-import br.com.rodrigogurgel.playground.exception.StrategyNotFoundException
 import com.github.michaelbull.result.andThenRecoverIf
 import com.github.michaelbull.result.onFailure
 import com.github.michaelbull.result.onSuccess

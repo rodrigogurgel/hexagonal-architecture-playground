@@ -1,15 +1,15 @@
 package br.com.rodrigogurgel.playground.adapter.mapper.rest
 
+import br.com.rodrigogurgel.playground.adapter.exception.MapperException
 import br.com.rodrigogurgel.playground.adapter.`in`.rest.dto.command.MailCommand.AsyncMailCommand
 import br.com.rodrigogurgel.playground.adapter.`in`.rest.dto.command.MailCommand.EmailCommand
 import br.com.rodrigogurgel.playground.adapter.`in`.rest.dto.command.MailCommand.SmsCommand
 import br.com.rodrigogurgel.playground.adapter.`in`.rest.dto.command.MailCommand.WhatsAppCommand
 import br.com.rodrigogurgel.playground.adapter.`in`.rest.dto.command.MailTypeCommand
-import br.com.rodrigogurgel.playground.domain.entities.Mail
-import br.com.rodrigogurgel.playground.domain.entities.MailData
-import br.com.rodrigogurgel.playground.domain.entities.MailType
-import br.com.rodrigogurgel.playground.domain.entities.Transaction
-import br.com.rodrigogurgel.playground.exception.MapperException
+import br.com.rodrigogurgel.playground.domain.entity.Mail
+import br.com.rodrigogurgel.playground.domain.entity.MailData
+import br.com.rodrigogurgel.playground.domain.entity.MailType
+import br.com.rodrigogurgel.playground.domain.entity.Transaction
 import br.com.rodrigogurgel.playground.`in`.event.dto.MailCommand
 import br.com.rodrigogurgel.playground.`in`.event.dto.MailDataCommand
 import br.com.rodrigogurgel.playground.`in`.event.dto.TransactionCommand

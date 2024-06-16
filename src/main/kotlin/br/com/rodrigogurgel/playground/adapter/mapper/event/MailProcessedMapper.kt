@@ -1,9 +1,9 @@
 package br.com.rodrigogurgel.playground.adapter.mapper.event
 
-import br.com.rodrigogurgel.playground.domain.entities.Mail
-import br.com.rodrigogurgel.playground.domain.entities.MailType
-import br.com.rodrigogurgel.playground.domain.entities.TransactionStatus
-import br.com.rodrigogurgel.playground.exception.MapperException
+import br.com.rodrigogurgel.playground.adapter.exception.MapperException
+import br.com.rodrigogurgel.playground.domain.entity.Mail
+import br.com.rodrigogurgel.playground.domain.entity.MailType
+import br.com.rodrigogurgel.playground.domain.entity.TransactionStatus
 import br.com.rodrigogurgel.playground.`out`.event.dto.MailDataProcessed
 import br.com.rodrigogurgel.playground.`out`.event.dto.MailProcessed
 import br.com.rodrigogurgel.playground.`out`.event.dto.MailTypeProcessed

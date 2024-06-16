@@ -1,4 +1,4 @@
-package br.com.rodrigogurgel.playground.domain.entities
+package br.com.rodrigogurgel.playground.domain.entity
 
 data class MailData(
     val body: String,

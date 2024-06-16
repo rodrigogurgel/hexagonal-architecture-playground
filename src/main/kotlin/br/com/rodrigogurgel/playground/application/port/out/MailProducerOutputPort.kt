@@ -1,6 +1,6 @@
 package br.com.rodrigogurgel.playground.application.port.out
 
-import br.com.rodrigogurgel.playground.domain.entities.Mail
+import br.com.rodrigogurgel.playground.domain.entity.Mail
 import com.github.michaelbull.result.Result
 
 interface MailProducerOutputPort {
