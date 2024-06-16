@@ -2,8 +2,8 @@ package br.com.rodrigogurgel.playground.adapter.out.event.producer
 
 import br.com.rodrigogurgel.playground.adapter.exception.MapperException
 import br.com.rodrigogurgel.playground.adapter.exception.ProducerException
+import br.com.rodrigogurgel.playground.adapter.mapper.event.toMailCommand
 import br.com.rodrigogurgel.playground.adapter.mapper.event.toMailProcessed
-import br.com.rodrigogurgel.playground.adapter.mapper.rest.toMailCommand
 import br.com.rodrigogurgel.playground.application.port.out.MailProducerOutputPort
 import br.com.rodrigogurgel.playground.domain.entity.Mail
 import com.github.michaelbull.result.Result

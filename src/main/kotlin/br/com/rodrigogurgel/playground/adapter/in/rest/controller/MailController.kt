@@ -1,12 +1,21 @@
 package br.com.rodrigogurgel.playground.adapter.`in`.rest.controller
 
-import br.com.rodrigogurgel.playground.adapter.`in`.rest.dto.command.MailCommand
+import br.com.rodrigogurgel.playground.adapter.`in`.rest.dto.request.AsyncMailRequest
+import br.com.rodrigogurgel.playground.adapter.`in`.rest.dto.request.MailRequest
+import br.com.rodrigogurgel.playground.adapter.`in`.rest.dto.request.MailTypeRequest
+import br.com.rodrigogurgel.playground.adapter.`in`.rest.dto.response.MailResponse
 import br.com.rodrigogurgel.playground.adapter.mapper.rest.toDomain
+import br.com.rodrigogurgel.playground.adapter.mapper.rest.toMailResponse
 import br.com.rodrigogurgel.playground.domain.usecase.FindMailUseCase
 import br.com.rodrigogurgel.playground.domain.usecase.SendMailUseCase
+import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.andThen
 import com.github.michaelbull.result.map
+import com.github.michaelbull.result.mapBoth
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Qualifier
+import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -24,37 +33,52 @@ class MailController(
     @Qualifier("asyncInputPort") private val asyncInputPort: SendMailUseCase,
     private val findMailUseCase: FindMailUseCase,
 ) {
+    private val logger = LoggerFactory.getLogger(MailController::class.java)
+
     @PostMapping("/email")
     suspend fun sendEmail(
-        @RequestBody emailCommand: MailCommand.EmailCommand,
-    ): Any {
-        return emailCommand.toDomain()
-            .andThen { transaction -> emailInputPort.send(transaction).map { transaction } }
-    }
+        @RequestBody mailRequest: MailRequest,
+    ): ResponseEntity<MailResponse> = emailInputPort.sendMail(MailTypeRequest.EMAIL, mailRequest)
 
     @PostMapping("/sms")
     suspend fun sendSms(
-        @RequestBody smsCommand: MailCommand.SmsCommand,
-    ) {
-        smsCommand.toDomain().andThen { transaction -> smsInputPort.send(transaction) }
-    }
+        @RequestBody mailRequest: MailRequest,
+    ): ResponseEntity<MailResponse> = smsInputPort.sendMail(MailTypeRequest.SMS, mailRequest)
 
     @PostMapping("/whatsapp")
     suspend fun sendWhatsApp(
-        @RequestBody whatsAppCommand: MailCommand.WhatsAppCommand,
-    ) {
-        whatsAppCommand.toDomain().andThen { mail -> whatsAppInputPort.send(mail) }
-    }
+        @RequestBody mailRequest: MailRequest,
+    ): ResponseEntity<MailResponse> = whatsAppInputPort.sendMail(MailTypeRequest.WHATSAPP, mailRequest)
 
     @PostMapping("/async")
     suspend fun sendAsync(
-        @RequestBody asyncMailCommand: MailCommand.AsyncMailCommand,
-    ) {
-        asyncMailCommand.toDomain().andThen { mail -> asyncInputPort.send(mail) }
-    }
+        @RequestBody mailRequest: AsyncMailRequest,
+    ): ResponseEntity<MailResponse> = asyncInputPort.sendMail(mailRequest.type, mailRequest)
 
     @GetMapping("/{mailId}")
-    suspend fun findMailById(@PathVariable mailId: UUID): Any? {
+    suspend fun findMailById(@PathVariable mailId: UUID): ResponseEntity<MailResponse?> {
         return findMailUseCase.findMailById(mailId)
+            .andThen { mail -> mail?.toMailResponse() ?: Ok(null) }
+            .mapBoth({ response ->
+                response?.run {
+                    ResponseEntity.status(HttpStatus.OK).body(response)
+                } ?: ResponseEntity.notFound().build()
+            }, {
+                ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null)
+            })
     }
+
+    private suspend fun SendMailUseCase.sendMail(
+        type: MailTypeRequest,
+        mailRequest: MailRequest,
+    ): ResponseEntity<MailResponse> =
+        mailRequest.toDomain(type)
+            .andThen { mail -> send(mail).map { mail } }
+            .andThen { mail -> mail.toMailResponse() }
+            .mapBoth({ response ->
+                ResponseEntity.status(HttpStatus.OK).body(response)
+            }, { throwable ->
+                logger.error("", throwable)
+                ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null)
+            })
 }

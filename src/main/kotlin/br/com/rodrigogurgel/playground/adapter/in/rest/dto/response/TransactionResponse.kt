@@ -1,12 +1,11 @@
-package br.com.rodrigogurgel.playground.adapter.`in`.rest.dto.processed
+package br.com.rodrigogurgel.playground.adapter.`in`.rest.dto.response
 
 import java.time.OffsetDateTime
 import java.util.UUID
 
-data class TransactionProcessed(
-    val transactionId: UUID,
+data class TransactionResponse(
     val correlationId: UUID,
-    val status: TransactionStatusProcessed,
+    val status: TransactionStatusResponse,
     val message: String?,
     val createdBy: String,
     val createdFrom: String,
