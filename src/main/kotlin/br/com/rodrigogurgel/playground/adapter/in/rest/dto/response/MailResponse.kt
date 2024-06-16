@@ -8,5 +8,7 @@ data class MailResponse(
     val transaction: TransactionResponse,
     val data: MailDataResponse,
     val type: MailTypeResponse,
-    var sentAt: OffsetDateTime? = null,
+    val sentAt: OffsetDateTime?,
+    val createdAt: OffsetDateTime,
+    val updatedAt: OffsetDateTime,
 )

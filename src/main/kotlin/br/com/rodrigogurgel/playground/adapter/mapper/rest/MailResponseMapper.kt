@@ -33,12 +33,13 @@ fun Mail.toMailResponse(): Result<MailResponse, MapperException> = runCatching {
                 message = message,
                 createdBy = createdBy,
                 createdFrom = createdFrom,
-                createdAt = OffsetDateTime.ofInstant(createdAt, ZoneId.systemDefault()),
-                updatedAt = OffsetDateTime.ofInstant(updatedAt, ZoneId.systemDefault()),
-            )
+
+                )
         },
         type = type.toMailTypeResponse(),
-        sentAt = sentAt?.let { OffsetDateTime.ofInstant(it, ZoneId.systemDefault()) }
+        sentAt = sentAt?.let { OffsetDateTime.ofInstant(it, ZoneId.systemDefault()) },
+        createdAt = OffsetDateTime.ofInstant(createdAt, ZoneId.systemDefault()),
+        updatedAt = OffsetDateTime.ofInstant(updatedAt, ZoneId.systemDefault()),
     )
 }.mapError { throwable ->
     MapperException(

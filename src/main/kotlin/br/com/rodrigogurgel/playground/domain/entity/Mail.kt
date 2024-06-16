@@ -8,17 +8,27 @@ data class Mail(
     var transaction: Transaction,
     val data: MailData,
     val type: MailType,
-    var sentAt: Instant? = null,
 ) {
-    fun toSuccess() {
+    var updatedAt: Instant = Instant.now()
+        private set
+
+    init {
+        updatedAt = Instant.now()
+    }
+
+    var sentAt: Instant? = null
+        private set
+
+    val createdAt: Instant = Instant.now()
+
+    fun toSentWithSuccess() {
+        sentAt = Instant.now()
+        updatedAt = Instant.now()
         this.transaction = transaction.toSuccess()
     }
 
-    fun toFailure(message: String) {
+    fun toSentWithFailure(message: String) {
+        updatedAt = Instant.now()
         this.transaction = transaction.toFailure(message)
-    }
-
-    fun setAsSent() {
-        sentAt = Instant.now()
     }
 }

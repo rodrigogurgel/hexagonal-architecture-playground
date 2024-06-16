@@ -24,12 +24,12 @@ class EmailInputPort(
         mailSenderOutputPort.send(mail)
             .onSuccess {
                 logger.info("Email sent with success")
-                mail.toSuccess()
+                mail.toSentWithSuccess()
                 mailProducerOutputPort.processed(mail)
             }
             .onFailure { throwable ->
                 logger.error("Email sent with failure", throwable)
-                mail.toFailure(throwable.message ?: "Unknown error")
+                mail.toSentWithFailure(throwable.message ?: "Unknown error")
                 mailProducerOutputPort.processed(mail)
             }
 }

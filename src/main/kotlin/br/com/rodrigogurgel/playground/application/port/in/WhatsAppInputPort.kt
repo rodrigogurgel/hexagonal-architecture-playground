@@ -23,12 +23,12 @@ class WhatsAppInputPort(
     override suspend fun send(mail: Mail): Result<Unit, Throwable> = mailSenderOutputPort.send(mail)
         .onSuccess {
             logger.info("WhatsApp message sent with success")
-            mail.toSuccess()
+            mail.toSentWithSuccess()
             mailProducerOutputPort.processed(mail)
         }
         .onFailure { throwable ->
             logger.error("WhatsApp message sent with failure", throwable)
-            mail.toFailure(throwable.message ?: "Unknown error")
+            mail.toSentWithFailure(throwable.message ?: "Unknown error")
             mailProducerOutputPort.processed(mail)
         }
 }

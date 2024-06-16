@@ -28,8 +28,6 @@ fun MailRequest.toDomain(type: MailTypeRequest): Result<Mail, Throwable> = runCa
                 correlationId = correlationId,
                 createdBy = createdBy,
                 createdFrom = "PLAYGROUND_API",
-                createdAt = Instant.now(),
-                updatedAt = Instant.now(),
             )
         },
         type = type.toDomain(),

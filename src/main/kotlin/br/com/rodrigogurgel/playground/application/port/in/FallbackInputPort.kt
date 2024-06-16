@@ -12,7 +12,7 @@ class FallbackInputPort(
     private val mailProducerOutputPort: MailProducerOutputPort,
 ) : SendMailUseCase {
     override suspend fun send(mail: Mail): Result<Unit, Throwable> = runSuspendCatching {
-        mail.toFailure("No strategy found for that command! Please contact support")
+        mail.toSentWithFailure("No strategy found for that command! Please contact support")
         mailProducerOutputPort.processed(mail)
     }
 }

@@ -23,10 +23,8 @@ fun Mail.toMailProcessed(): Result<GenericRecord, MapperException> = runCatching
                     .setCorrelationId(correlationId.toString())
                     .setCreatedBy(createdBy)
                     .setCreatedFrom(createdFrom)
-                    .setCreatedAt(createdAt.toEpochMilli())
                     .setStatus(status.toTransactionStatusProcessed())
                     .setMessage(message)
-                    .setUpdatedAt(updatedAt.toEpochMilli())
                     .build()
             }
         )
@@ -40,6 +38,8 @@ fun Mail.toMailProcessed(): Result<GenericRecord, MapperException> = runCatching
                     .build()
             }
         ).setType(type.toMailTypeProcessed())
+        .setCreatedAt(createdAt.toEpochMilli())
+        .setUpdatedAt(updatedAt.toEpochMilli())
         .setSentAt(sentAt?.toEpochMilli())
         .build()
 }.mapError { throwable ->

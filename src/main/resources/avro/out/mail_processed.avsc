@@ -26,10 +26,6 @@
             "type": "string"
           },
           {
-            "name": "createdAt",
-            "type": "long"
-          },
-          {
             "name": "status",
             "type": {
               "name": "TransactionStatusProcessed",
@@ -47,10 +43,6 @@
               "string"
             ],
             "default": null
-          },
-          {
-            "name": "updatedAt",
-            "type": "long"
           }
         ]
       }
@@ -95,6 +87,14 @@
           "WHATSAPP"
         ]
       }
+    },
+    {
+      "name": "createdAt",
+      "type": "long"
+    },
+    {
+      "name": "updatedAt",
+      "type": "long"
     },
     {
       "name": "sentAt",

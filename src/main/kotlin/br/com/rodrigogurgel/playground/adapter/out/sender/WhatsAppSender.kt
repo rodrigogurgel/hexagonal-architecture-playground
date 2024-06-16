@@ -11,6 +11,5 @@ import org.springframework.stereotype.Component
 class WhatsAppSender : MailSenderOutputPort {
     override suspend fun send(mail: Mail): Result<Unit, Throwable> = runSuspendCatching {
         intermittent()
-        mail.setAsSent()
     }
 }

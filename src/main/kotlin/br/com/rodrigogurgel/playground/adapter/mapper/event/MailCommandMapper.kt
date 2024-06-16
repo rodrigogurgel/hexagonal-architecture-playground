@@ -35,8 +35,6 @@ fun MailCommand.toDomain(): Result<Mail, Throwable> = runCatching {
                 status = TransactionStatus.PROCESSING,
                 createdBy = createdBy.toString(),
                 createdFrom = createdFrom.toString(),
-                createdAt = Instant.now(),
-                updatedAt = Instant.now(),
             )
         },
         type = type.toDomain()
