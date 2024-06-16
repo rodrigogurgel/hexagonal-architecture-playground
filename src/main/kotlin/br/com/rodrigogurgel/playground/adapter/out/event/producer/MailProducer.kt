@@ -1,10 +1,9 @@
 package br.com.rodrigogurgel.playground.adapter.out.event.producer
 
-import br.com.rodrigogurgel.playground.adapter.out.event.mapper.toMailCommand
-import br.com.rodrigogurgel.playground.adapter.out.event.mapper.toMailProcessed
-import br.com.rodrigogurgel.playground.application.port.out.producer.ProducerOutputPort
-import br.com.rodrigogurgel.playground.domain.Mail
-import br.com.rodrigogurgel.playground.domain.Transaction
+import br.com.rodrigogurgel.playground.adapter.mapper.event.toMailProcessed
+import br.com.rodrigogurgel.playground.adapter.mapper.rest.toMailCommand
+import br.com.rodrigogurgel.playground.application.port.out.MailProducerOutputPort
+import br.com.rodrigogurgel.playground.domain.entities.Mail
 import br.com.rodrigogurgel.playground.exception.MapperException
 import br.com.rodrigogurgel.playground.exception.ProduceException
 import com.github.michaelbull.result.Result
@@ -23,13 +22,13 @@ import java.util.UUID
 @Component
 class MailProducer(
     private val kafkaTemplate: KafkaTemplate<String, GenericRecord>,
-) : ProducerOutputPort<Mail> {
+) : MailProducerOutputPort {
     private val logger = LoggerFactory.getLogger(MailProducer::class.java)
 
-    override suspend fun processed(mail: Transaction<Mail>): Result<Unit, Throwable> = mail.toMailProcessed()
+    override suspend fun processed(mail: Mail): Result<Unit, Throwable> = mail.toMailProcessed()
         .andThen { record -> produce("mail-processed", record) }
 
-    override suspend fun command(mail: Transaction<Mail>): Result<Unit, Throwable> = mail.toMailCommand()
+    override suspend fun command(mail: Mail): Result<Unit, Throwable> = mail.toMailCommand()
         .andThen { record -> produce("mail-command", record) }
 
     private suspend fun produce(topic: String, record: GenericRecord): Result<Unit, Throwable> =

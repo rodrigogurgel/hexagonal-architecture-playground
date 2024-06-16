@@ -6,9 +6,7 @@ import br.com.rodrigogurgel.playground.adapter.`in`.event.listener.strategy.impl
 import br.com.rodrigogurgel.playground.adapter.`in`.event.listener.strategy.impl.SmsStrategyImpl
 import br.com.rodrigogurgel.playground.adapter.`in`.event.listener.strategy.impl.WhatsAppStrategyImpl
 import br.com.rodrigogurgel.playground.adapter.`in`.event.listener.strategy.wrapper.DummyStrategyWrapper
-import br.com.rodrigogurgel.playground.application.port.`in`.MailSenderInputPort
-import br.com.rodrigogurgel.playground.application.port.`in`.ProducerInputPort
-import br.com.rodrigogurgel.playground.domain.Mail
+import br.com.rodrigogurgel.playground.domain.usecase.MailUseCase
 import br.com.rodrigogurgel.playground.`in`.event.dto.MailCommand
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
@@ -20,27 +18,27 @@ class GenericRecordStrategyConfig {
     @Bean
     @ConditionalOnProperty(value = ["strategy.email.enabled"], havingValue = "true", matchIfMissing = true)
     fun emailEventStrategy(
-        @Qualifier("emailService") emailSenderInputPort: MailSenderInputPort,
+        @Qualifier("emailInputPort") emailSenderInputPort: MailUseCase,
     ): GenericRecordStrategy<MailCommand> =
         DummyStrategyWrapper(EmailStrategyImpl(emailSenderInputPort))
 
     @Bean
     @ConditionalOnProperty(value = ["strategy.sms.enabled"], havingValue = "true", matchIfMissing = true)
     fun smsEventStrategy(
-        @Qualifier("smsService") smsSenderInputPort: MailSenderInputPort,
+        @Qualifier("smsInputPort") smsSenderInputPort: MailUseCase,
     ): GenericRecordStrategy<MailCommand> =
         SmsStrategyImpl(smsSenderInputPort)
 
     @Bean
     @ConditionalOnProperty(value = ["strategy.whatsapp.enabled"], havingValue = "true", matchIfMissing = true)
     fun whatsAppEventStrategy(
-        @Qualifier("whatsAppService") whatsAppSenderInputPort: MailSenderInputPort,
+        @Qualifier("whatsAppInputPort") whatsAppSenderInputPort: MailUseCase,
     ): GenericRecordStrategy<MailCommand> =
         DummyStrategyWrapper(WhatsAppStrategyImpl(whatsAppSenderInputPort))
 
     @Bean
     fun fallbackStrategy(
-        mailProducerInputPort: ProducerInputPort<Mail>,
+        @Qualifier("fallbackInputPort") fallbackInputPort: MailUseCase
     ): GenericRecordStrategy<MailCommand> =
-        FallbackStrategyImpl(true, mailProducerInputPort)
+        FallbackStrategyImpl(true, fallbackInputPort)
 }

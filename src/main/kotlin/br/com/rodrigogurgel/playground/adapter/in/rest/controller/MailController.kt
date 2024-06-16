@@ -1,14 +1,8 @@
 package br.com.rodrigogurgel.playground.adapter.`in`.rest.controller
 
-import br.com.rodrigogurgel.playground.adapter.`in`.rest.dto.command.AsyncMailCommand
-import br.com.rodrigogurgel.playground.adapter.`in`.rest.dto.command.EmailCommand
-import br.com.rodrigogurgel.playground.adapter.`in`.rest.dto.command.SmsCommand
-import br.com.rodrigogurgel.playground.adapter.`in`.rest.dto.command.WhatsAppCommand
-import br.com.rodrigogurgel.playground.adapter.`in`.rest.mapper.toDomain
-import br.com.rodrigogurgel.playground.application.port.`in`.MailSenderInputPort
-import br.com.rodrigogurgel.playground.application.port.`in`.ProducerInputPort
-import br.com.rodrigogurgel.playground.application.port.`in`.TransactionInputPort
-import br.com.rodrigogurgel.playground.domain.Mail
+import br.com.rodrigogurgel.playground.adapter.`in`.rest.dto.command.MailCommand
+import br.com.rodrigogurgel.playground.adapter.mapper.rest.toDomain
+import br.com.rodrigogurgel.playground.domain.usecase.MailUseCase
 import com.github.michaelbull.result.andThen
 import com.github.michaelbull.result.map
 import org.springframework.beans.factory.annotation.Qualifier
@@ -23,43 +17,42 @@ import java.util.UUID
 @RestController
 @RequestMapping("/api/v1/mail")
 class MailController(
-    @Qualifier("emailService") private val emailSenderInputPort: MailSenderInputPort,
-    @Qualifier("smsService") private val smsInputPort: MailSenderInputPort,
-    @Qualifier("whatsAppService") private val whatsAppInputPort: MailSenderInputPort,
-    private val mailProducerInputPort: ProducerInputPort<Mail>,
-    private val transactionInputPort: TransactionInputPort,
+    @Qualifier("emailInputPort") private val emailInputPort: MailUseCase,
+    @Qualifier("smsInputPort") private val smsInputPort: MailUseCase,
+    @Qualifier("whatsAppInputPort") private val whatsAppInputPort: MailUseCase,
+    @Qualifier("asyncInputPort") private val asyncInputPort: MailUseCase,
 ) {
     @PostMapping("/email")
     suspend fun sendEmail(
-        @RequestBody emailCommand: EmailCommand,
+        @RequestBody emailCommand: MailCommand.EmailCommand,
     ): Any {
         return emailCommand.toDomain()
-            .andThen { transaction -> emailSenderInputPort.send(transaction).map { transaction } }
+            .andThen { transaction -> emailInputPort.send(transaction).map { transaction } }
     }
 
     @PostMapping("/sms")
     suspend fun sendSms(
-        @RequestBody smsCommand: SmsCommand,
+        @RequestBody smsCommand: MailCommand.SmsCommand,
     ) {
         smsCommand.toDomain().andThen { transaction -> smsInputPort.send(transaction) }
     }
 
     @PostMapping("/whatsapp")
     suspend fun sendWhatsApp(
-        @RequestBody whatsAppCommand: WhatsAppCommand,
+        @RequestBody whatsAppCommand: MailCommand.WhatsAppCommand,
     ) {
-        whatsAppCommand.toDomain().andThen { transaction -> whatsAppInputPort.send(transaction) }
+        whatsAppCommand.toDomain().andThen { mail -> whatsAppInputPort.send(mail) }
     }
 
     @PostMapping("/async")
     suspend fun sendAsync(
-        @RequestBody asyncMailCommand: AsyncMailCommand,
+        @RequestBody asyncMailCommand: MailCommand.AsyncMailCommand,
     ) {
-        asyncMailCommand.toDomain().andThen { transaction -> mailProducerInputPort.produce(transaction) }
+        asyncMailCommand.toDomain().andThen { mail -> asyncInputPort.send(mail) }
     }
 
-    @GetMapping("/transaction/{transactionId}")
-    suspend fun findTransactionById(@PathVariable transactionId: UUID): Any? {
-        return transactionInputPort.findTransactionById<Mail>(transactionId)
+    @GetMapping("/{mailId}")
+    suspend fun findMailById(@PathVariable mailId: UUID): Any? {
+        return emailInputPort.findMailById(mailId)
     }
 }

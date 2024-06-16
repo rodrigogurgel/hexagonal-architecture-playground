@@ -10,10 +10,6 @@
         "name": "TransactionCommand",
         "fields": [
           {
-            "name": "transactionId",
-            "type": "string"
-          },
-          {
             "name": "correlationId",
             "type": "string"
           },
@@ -53,19 +49,19 @@
           {
             "name": "to",
             "type": "string"
-          },
-          {
-            "name": "type",
-            "type": {
-              "name": "MailTypeCommand",
-              "type": "enum",
-              "symbols": [
-                "EMAIL",
-                "SMS",
-                "WHATSAPP"
-              ]
-            }
           }
+        ]
+      }
+    },
+    {
+      "name": "type",
+      "type": {
+        "name": "MailTypeCommand",
+        "type": "enum",
+        "symbols": [
+          "EMAIL",
+          "SMS",
+          "WHATSAPP"
         ]
       }
     }

@@ -4,15 +4,15 @@
   "namespace": "br.com.rodrigogurgel.playground.out.event.dto",
   "fields": [
     {
+      "name": "id",
+      "type": "string"
+    },
+    {
       "name": "transaction",
       "type": {
         "type": "record",
         "name": "TransactionProcessed",
         "fields": [
-          {
-            "name": "transactionId",
-            "type": "string"
-          },
           {
             "name": "correlationId",
             "type": "string"
@@ -80,28 +80,28 @@
           {
             "name": "to",
             "type": "string"
-          },
-          {
-            "name": "type",
-            "type": {
-              "name": "MailTypeProcessed",
-              "type": "enum",
-              "symbols": [
-                "EMAIL",
-                "SMS",
-                "WHATSAPP"
-              ]
-            }
-          },
-          {
-            "name": "sentAt",
-            "type": [
-              "null",
-              "long"
-            ]
           }
         ]
       }
+    },
+    {
+      "name": "type",
+      "type": {
+        "name": "MailTypeProcessed",
+        "type": "enum",
+        "symbols": [
+          "EMAIL",
+          "SMS",
+          "WHATSAPP"
+        ]
+      }
+    },
+    {
+      "name": "sentAt",
+      "type": [
+        "null",
+        "long"
+      ]
     }
   ]
 }
