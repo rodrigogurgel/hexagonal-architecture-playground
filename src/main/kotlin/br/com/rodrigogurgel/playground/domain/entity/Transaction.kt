@@ -5,10 +5,25 @@ import java.util.UUID
 
 data class Transaction(
     val correlationId: UUID,
-    var status: TransactionStatus = TransactionStatus.PROCESSING,
-    var message: String? = null,
+    val status: TransactionStatus = TransactionStatus.PROCESSING,
+    val message: String? = null,
     val createdBy: String,
     val createdFrom: String,
     val createdAt: Instant,
-    var updatedAt: Instant,
-)
+    val updatedAt: Instant,
+) {
+    fun toSuccess(): Transaction {
+        return copy(
+            updatedAt = Instant.now(),
+            status = TransactionStatus.SUCCESS
+        )
+    }
+
+    fun toFailure(message: String): Transaction {
+        return copy(
+            updatedAt = Instant.now(),
+            status = TransactionStatus.FAILURE,
+            message = message
+        )
+    }
+}

@@ -5,20 +5,17 @@ import java.util.UUID
 
 data class Mail(
     val id: UUID,
-    val transaction: Transaction,
+    var transaction: Transaction,
     val data: MailData,
     val type: MailType,
     var sentAt: Instant? = null,
 ) {
     fun toSuccess() {
-        this.transaction.updatedAt = Instant.now()
-        this.transaction.status = TransactionStatus.SUCCESS
+        this.transaction = transaction.toSuccess()
     }
 
     fun toFailure(message: String) {
-        this.transaction.updatedAt = Instant.now()
-        this.transaction.status = TransactionStatus.FAILURE
-        this.transaction.message = message
+        this.transaction = transaction.toFailure(message)
     }
 
     fun setAsSent() {
