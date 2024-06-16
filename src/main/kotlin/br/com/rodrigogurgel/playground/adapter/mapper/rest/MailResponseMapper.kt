@@ -34,7 +34,7 @@ fun Mail.toMailResponse(): Result<MailResponse, MapperException> = runCatching {
                 createdBy = createdBy,
                 createdFrom = createdFrom,
 
-                )
+            )
         },
         type = type.toMailTypeResponse(),
         sentAt = sentAt?.let { OffsetDateTime.ofInstant(it, ZoneId.systemDefault()) },

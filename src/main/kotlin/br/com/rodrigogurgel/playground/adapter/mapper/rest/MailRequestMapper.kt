@@ -10,7 +10,6 @@ import br.com.rodrigogurgel.playground.domain.entity.Transaction
 import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.mapError
 import com.github.michaelbull.result.runCatching
-import java.time.Instant
 
 fun MailRequest.toDomain(type: MailTypeRequest): Result<Mail, Throwable> = runCatching {
     Mail(

@@ -15,7 +15,6 @@ import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.mapError
 import com.github.michaelbull.result.runCatching
 import org.apache.avro.generic.GenericRecord
-import java.time.Instant
 import java.util.UUID
 
 fun MailCommand.toDomain(): Result<Mail, Throwable> = runCatching {
