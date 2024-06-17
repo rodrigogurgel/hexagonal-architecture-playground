@@ -2,7 +2,7 @@ package br.com.rodrigogurgel.playground.adapter.`in`.event.listener.strategy.imp
 
 import br.com.rodrigogurgel.playground.adapter.`in`.event.listener.strategy.GenericRecordStrategy
 import br.com.rodrigogurgel.playground.adapter.mapper.event.toDomain
-import br.com.rodrigogurgel.playground.domain.usecase.SendMailUseCase
+import br.com.rodrigogurgel.playground.application.usecase.SendMailUseCase
 import br.com.rodrigogurgel.playground.`in`.event.dto.MailCommand
 import br.com.rodrigogurgel.playground.`in`.event.dto.MailTypeCommand
 import com.github.michaelbull.result.Result

@@ -6,8 +6,8 @@ import br.com.rodrigogurgel.playground.adapter.`in`.rest.dto.request.MailTypeReq
 import br.com.rodrigogurgel.playground.adapter.`in`.rest.dto.response.MailResponse
 import br.com.rodrigogurgel.playground.adapter.mapper.rest.toDomain
 import br.com.rodrigogurgel.playground.adapter.mapper.rest.toMailResponse
-import br.com.rodrigogurgel.playground.domain.usecase.FindMailUseCase
-import br.com.rodrigogurgel.playground.domain.usecase.SendMailUseCase
+import br.com.rodrigogurgel.playground.application.usecase.FindMailUseCase
+import br.com.rodrigogurgel.playground.application.usecase.SendMailUseCase
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.andThen
 import com.github.michaelbull.result.map

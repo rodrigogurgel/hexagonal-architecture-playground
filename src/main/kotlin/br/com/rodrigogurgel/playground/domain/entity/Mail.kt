@@ -1,5 +1,6 @@
 package br.com.rodrigogurgel.playground.domain.entity
 
+import br.com.rodrigogurgel.playground.domain.policy.MailValidator
 import java.time.Instant
 import java.util.UUID
 
@@ -31,4 +32,6 @@ data class Mail(
         updatedAt = Instant.now()
         this.transaction = transaction.toFailure(message)
     }
+
+    fun validate(policy: MailValidator) = policy.validate(this)
 }

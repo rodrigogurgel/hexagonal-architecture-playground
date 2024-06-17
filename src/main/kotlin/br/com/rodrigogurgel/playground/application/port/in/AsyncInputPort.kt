@@ -1,8 +1,8 @@
 package br.com.rodrigogurgel.playground.application.port.`in`
 
 import br.com.rodrigogurgel.playground.application.port.out.MailProducerOutputPort
+import br.com.rodrigogurgel.playground.application.usecase.SendMailUseCase
 import br.com.rodrigogurgel.playground.domain.entity.Mail
-import br.com.rodrigogurgel.playground.domain.usecase.SendMailUseCase
 import com.github.michaelbull.result.Result
 import org.springframework.stereotype.Service
 

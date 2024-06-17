@@ -43,13 +43,13 @@ class ApplicationLayerTest {
     }
 
     @ArchTest
-    fun `Classes reside in Application Port In should implement reside in package Domain Use Case`(
+    fun `Classes reside in Application Port In should implement reside in package Application Use Case`(
         importedClasses: JavaClasses,
     ) {
         classes().that().resideInAPackage("..application.port.in..")
             .and().areTopLevelClasses()
             .should()
-            .implement(resideInAPackage("..domain.usecase.."))
+            .implement(resideInAPackage("..application.usecase.."))
             .check(importedClasses)
     }
 

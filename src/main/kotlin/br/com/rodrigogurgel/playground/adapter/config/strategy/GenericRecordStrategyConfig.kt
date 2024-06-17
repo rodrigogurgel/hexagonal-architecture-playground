@@ -6,7 +6,7 @@ import br.com.rodrigogurgel.playground.adapter.`in`.event.listener.strategy.impl
 import br.com.rodrigogurgel.playground.adapter.`in`.event.listener.strategy.impl.SmsStrategyImpl
 import br.com.rodrigogurgel.playground.adapter.`in`.event.listener.strategy.impl.WhatsAppStrategyImpl
 import br.com.rodrigogurgel.playground.adapter.`in`.event.listener.strategy.wrapper.DummyStrategyWrapper
-import br.com.rodrigogurgel.playground.domain.usecase.SendMailUseCase
+import br.com.rodrigogurgel.playground.application.usecase.SendMailUseCase
 import br.com.rodrigogurgel.playground.`in`.event.dto.MailCommand
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty

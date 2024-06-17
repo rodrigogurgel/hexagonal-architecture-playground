@@ -7,6 +7,7 @@ import com.tngtech.archunit.core.importer.ImportOption.DoNotIncludeJars
 import com.tngtech.archunit.core.importer.ImportOption.DoNotIncludeTests
 import com.tngtech.archunit.junit.AnalyzeClasses
 import com.tngtech.archunit.junit.ArchTest
+import com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes
 import com.tngtech.archunit.library.Architectures.layeredArchitecture
 
 @Suppress("MaxLineLength")
@@ -36,5 +37,52 @@ class ArchitectureLayersTest {
                 )
             )
             .check(importedClasses)
+    }
+
+    @ArchTest
+    fun `Classes have name ending with UseCase should reside in package Application Use Case`(
+        importedClasses: JavaClasses,
+    ) {
+        classes()
+            .that()
+            .haveSimpleNameEndingWith(
+                "UseCase"
+            )
+            .should()
+            .resideInAPackage(
+                "..application.usecase.."
+            )
+            .check(importedClasses)
+    }
+
+    @ArchTest
+    fun `Classes reside in Application Use Case In should be interfaces`(
+        importedClasses: JavaClasses,
+    ) {
+        classes()
+            .that()
+            .resideInAPackage(
+                "..application.usecase.."
+            )
+            .should()
+            .beInterfaces()
+            .check(importedClasses)
+    }
+
+    @ArchTest
+    fun `Classes reside in Application Use Case only be accessed by package Adapter In`(
+        importedClasses: JavaClasses,
+    ) {
+        classes()
+            .that()
+            .resideInAPackage(
+                "..application.usecase.."
+            )
+            .should()
+            .onlyBeAccessed()
+            .byClassesThat()
+            .resideInAPackage(
+                "..adapter.in..",
+            ).check(importedClasses)
     }
 }

@@ -2,11 +2,14 @@ package br.com.rodrigogurgel.playground.application.port.`in`
 
 import br.com.rodrigogurgel.playground.application.port.out.MailProducerOutputPort
 import br.com.rodrigogurgel.playground.application.port.out.MailSenderOutputPort
+import br.com.rodrigogurgel.playground.application.usecase.SendMailUseCase
 import br.com.rodrigogurgel.playground.domain.entity.Mail
-import br.com.rodrigogurgel.playground.domain.usecase.SendMailUseCase
+import br.com.rodrigogurgel.playground.domain.policy.EmailValidator
 import com.github.michaelbull.result.Result
+import com.github.michaelbull.result.andThen
 import com.github.michaelbull.result.onFailure
 import com.github.michaelbull.result.onSuccess
+import com.github.michaelbull.result.runCatching
 import io.micrometer.core.annotation.Timed
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Qualifier
@@ -21,7 +24,8 @@ class EmailInputPort(
 
     @Timed("email_send_message")
     override suspend fun send(mail: Mail): Result<Unit, Throwable> =
-        mailSenderOutputPort.send(mail)
+        runCatching { mail.validate(EmailValidator) }
+            .andThen { mailSenderOutputPort.send(mail) }
             .onSuccess {
                 logger.info("Email sent with success")
                 mail.toSentWithSuccess()
